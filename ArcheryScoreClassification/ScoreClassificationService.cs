@@ -7,7 +7,7 @@ namespace ArcheryScoreClassification
     {
        public Response GetClassification(Request request)
        {
-           return new Response("Go Serverless v1.0! Your function executed successfully!", request);
+           return new Response("Go Serverless v1.0! Your function executed successfully!  Testing with new variables in request", request);
        }
     }
 }
