@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArcheryScoreClassification", "ArcheryScoreClassification\ArcheryScoreClassification.csproj", "{03C0CBA8-AA1B-4AB4-B730-CE7A561E11AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArcheryScoreClassification.Tests", "ArcheryScoreClassification.Tests\ArcheryScoreClassification.Tests.csproj", "{B18973BC-75CE-457B-A74B-6A5C0BE50397}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03C0CBA8-AA1B-4AB4-B730-CE7A561E11AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03C0CBA8-AA1B-4AB4-B730-CE7A561E11AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03C0CBA8-AA1B-4AB4-B730-CE7A561E11AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03C0CBA8-AA1B-4AB4-B730-CE7A561E11AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B18973BC-75CE-457B-A74B-6A5C0BE50397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B18973BC-75CE-457B-A74B-6A5C0BE50397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B18973BC-75CE-457B-A74B-6A5C0BE50397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B18973BC-75CE-457B-A74B-6A5C0BE50397}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A90C2257-2E12-4BF1-976B-8A578805B364}
+	EndGlobalSection
+EndGlobal
