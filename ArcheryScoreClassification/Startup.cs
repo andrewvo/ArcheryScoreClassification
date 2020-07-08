@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ArcheryScoreClassification.Configuration;
+﻿using ArcheryScoreClassification.Configuration;
+using ArcheryScoreClassification.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,19 +7,23 @@ namespace ArcheryScoreClassification
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; }
 
+        public IConfiguration Configuration { get; }
+        public static IServiceCollection Container => ConfigureServices(LambdaConfiguration.Configuration);
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services)
+
+        private static IServiceCollection ConfigureServices(IConfigurationRoot configuration)
         {
-            services.Configure<ClassificationScoresConfig>(Configuration.GetSection("ClassificationScoresConfig"));
+            var services = new ServiceCollection();
+            services.Configure<ClassificationScoresConfig>(configuration.GetSection("ClassificationScoresConfig"));
+            services.AddTransient<ILambdaConfiguration, LambdaConfiguration>();
+            services.AddTransient<IGetClassificationFromScore, GetClassificationFromScore>();
 
+            return services;
         }
-
-
     }
 }

@@ -1,9 +1,11 @@
 using AutoFixture;
 using FluentAssertions;
 using Moq.AutoMock;
-using System;
 using ArcheryScoreClassification.Helpers;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using System;
 
 namespace ArcheryScoreClassification.Tests
 {
@@ -22,11 +24,15 @@ namespace ArcheryScoreClassification.Tests
         public void WhenGet()
         {
             //Arrange
-            var subject = Mocker.CreateInstance<ScoreClassificationService>();
+            var serviceCollections = new ServiceCollection();
             var request = AutoFixture.Create<Request>();
             var classification = AutoFixture.Create<string>();
-            Mocker.GetMock<IGetClassificationFromScore>().Setup(gcfs => gcfs.GetClassification(request.Score))
-                .Returns(classification);
+            var getClassificationFromScoreMock = new Mock<IGetClassificationFromScore>();
+            getClassificationFromScoreMock.Setup(sp => sp.GetClassification(request.Score)).Returns(classification);
+            serviceCollections.AddScoped(provider => getClassificationFromScoreMock.Object);
+            var serviceProvider = serviceCollections.BuildServiceProvider();
+
+            var subject = new ScoreClassificationService(serviceProvider);
             //Act
             var result = subject.GetClassification(request);
             //Assert

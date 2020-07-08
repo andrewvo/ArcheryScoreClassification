@@ -1,20 +1,29 @@
 using Amazon.Lambda.Core;
 using ArcheryScoreClassification.Helpers;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 namespace ArcheryScoreClassification
 {
     public class ScoreClassificationService
     {
-        private readonly IGetClassificationFromScore _getClassificationFromScore;
+        private readonly ServiceProvider _serviceProvider;
 
-        public ScoreClassificationService(IGetClassificationFromScore getClassificationFromScore)
+        public ScoreClassificationService() : this(Startup.Container.BuildServiceProvider())
         {
-            _getClassificationFromScore = getClassificationFromScore;
+   
         }
-       public Response GetClassification(Request request)
+
+        public ScoreClassificationService(ServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public Response GetClassification(Request request)
        {
-           var classification = _getClassificationFromScore.GetClassification(request.Score);
+           var getClassificationFromScore = _serviceProvider.GetService<IGetClassificationFromScore>();
+           var classification = getClassificationFromScore.GetClassification(request.Score);
            return new Response(classification, request);
        }
     }
