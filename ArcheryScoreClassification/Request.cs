@@ -2,7 +2,7 @@
 {
     public class Request
     {
-      public string Score {get; set;}
-      public string RoundName {get; set;}
+        public int Score { get; set; }
+        public string RoundName { get; set; }
     }
 }

@@ -2,6 +2,7 @@ using AutoFixture;
 using FluentAssertions;
 using Moq.AutoMock;
 using System;
+using ArcheryScoreClassification.Helpers;
 using Xunit;
 
 namespace ArcheryScoreClassification.Tests
@@ -23,10 +24,14 @@ namespace ArcheryScoreClassification.Tests
             //Arrange
             var subject = Mocker.CreateInstance<ScoreClassificationService>();
             var request = AutoFixture.Create<Request>();
+            var classification = AutoFixture.Create<string>();
+            Mocker.GetMock<IGetClassificationFromScore>().Setup(gcfs => gcfs.GetClassification(request.Score))
+                .Returns(classification);
             //Act
             var result = subject.GetClassification(request);
             //Assert
-            result.Should().NotBeNull();
+            result.Message.Should().Be(classification);
+            result.Request.Should().BeEquivalentTo(request);
         }
     }
 }
