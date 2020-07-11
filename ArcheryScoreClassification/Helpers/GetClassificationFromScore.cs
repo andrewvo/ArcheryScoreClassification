@@ -7,16 +7,20 @@ namespace ArcheryScoreClassification.Helpers
 {
     public class GetClassificationFromScore : IGetClassificationFromScore
     {
-        private readonly IOptions<ClassificationScoresConfig> _classificationScoreConfig;
+        private readonly IOptions<FitaMensClassificationScoresConfig> _classificationScoreConfig;
+        private readonly IClassificationScoresForParticularRoundStrategyFactory _classificationScoresForParticularRoundStrategyFactory;
 
-        public GetClassificationFromScore(IOptions<ClassificationScoresConfig> classificationScoreConfig)
+        public GetClassificationFromScore(IOptions<FitaMensClassificationScoresConfig> classificationScoreConfig, IClassificationScoresForParticularRoundStrategyFactory classificationScoresForParticularRoundStrategyFactory)
         {
             _classificationScoreConfig = classificationScoreConfig;
+            _classificationScoresForParticularRoundStrategyFactory = classificationScoresForParticularRoundStrategyFactory;
         }
-        public string GetClassification(int score)
+        public string GetClassification(int score, string roundName)
         {
             var classification = "";
-            var classificationScores = _classificationScoreConfig.Value.ClassificationScores;
+            var classificationScoreStrategy = _classificationScoresForParticularRoundStrategyFactory.GetStrategy(roundName);
+
+            var classificationScores = classificationScoreStrategy.GetClassificationScores();
 
             var scores = classificationScores.Values;
 

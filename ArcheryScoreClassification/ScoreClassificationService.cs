@@ -23,7 +23,7 @@ namespace ArcheryScoreClassification
         public Response GetClassification(Request request)
        {
            var getClassificationFromScore = _serviceProvider.GetService<IGetClassificationFromScore>();
-           var classification = getClassificationFromScore.GetClassification(request.Score);
+           var classification = getClassificationFromScore.GetClassification(request.Score, request.RoundName);
            return new Response(classification, request);
        }
     }

@@ -28,7 +28,7 @@ namespace ArcheryScoreClassification.Tests
             var request = AutoFixture.Create<Request>();
             var classification = AutoFixture.Create<string>();
             var getClassificationFromScoreMock = new Mock<IGetClassificationFromScore>();
-            getClassificationFromScoreMock.Setup(sp => sp.GetClassification(request.Score)).Returns(classification);
+            getClassificationFromScoreMock.Setup(sp => sp.GetClassification(request.Score, request.RoundName)).Returns(classification);
             serviceCollections.AddScoped(provider => getClassificationFromScoreMock.Object);
             var serviceProvider = serviceCollections.BuildServiceProvider();
 

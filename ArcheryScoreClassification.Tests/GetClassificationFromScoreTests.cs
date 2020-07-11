@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ArcheryScoreClassification.Configuration;
 using ArcheryScoreClassification.Helpers;
+using ArcheryScoreClassification.Strategies;
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
@@ -28,16 +29,20 @@ namespace ArcheryScoreClassification.Tests
         {
             //Arrange
             var subject = Mocker.CreateInstance<GetClassificationFromScore>();
-            var score = AutoFixture.Create<int>();
-            var classificationScoresConfig = AutoFixture.Create<ClassificationScoresConfig>();
+            var roundName = AutoFixture.Create<string>();
+            var classificationScores = AutoFixture.Create<Dictionary<string,int>>();
             var expectedResult = "";
-            Mocker.GetMock<IOptions<ClassificationScoresConfig>>().Setup(option => option.Value)
-                .Returns(classificationScoresConfig);
+            var score = AutoFixture.Create<int>();
 
-            var classificationScores = classificationScoresConfig.ClassificationScores.Values;
-            var closestClassificationScore = classificationScores.OrderBy(item => Math.Abs(score - item)).First();
+            Mocker.GetMock<IClassificationScoresForParticularRoundStrategyFactory>()
+                .Setup(factory => factory.GetStrategy(roundName))
+                .Returns(Mocker.GetMock<IClassificationScoresForParticularRoundStrategy>().Object);
+            Mocker.GetMock<IClassificationScoresForParticularRoundStrategy>().Setup(strat => strat.GetClassificationScores()).Returns(classificationScores);
 
-            foreach (var classificationScore in classificationScoresConfig.ClassificationScores)
+            var classificationScoresWithoutInClassification = classificationScores.Values;
+            var closestClassificationScore = classificationScoresWithoutInClassification.OrderBy(item => Math.Abs(score - item)).First();
+
+            foreach (var classificationScore in classificationScores)
             {
                 if (classificationScore.Value == closestClassificationScore)
                 {
@@ -45,7 +50,7 @@ namespace ArcheryScoreClassification.Tests
                 }
             }
             //Act
-            var result = subject.GetClassification(score);
+            var result = subject.GetClassification(score, roundName);
             //Assert
             result.Should().Be(expectedResult);
         }

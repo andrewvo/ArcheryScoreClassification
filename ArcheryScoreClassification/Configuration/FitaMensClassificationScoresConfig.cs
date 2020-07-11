@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ArcheryScoreClassification.Configuration
 {
-    public class ClassificationScoresConfig
+    public class FitaMensClassificationScoresConfig
     {
-        public Dictionary<string, int> ClassificationScores { get; set; }
+        public Dictionary<string, int> FitaMensClassificationScores { get; set; }
     }
 }
