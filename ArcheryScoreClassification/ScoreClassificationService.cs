@@ -3,6 +3,7 @@ using ArcheryScoreClassification.Helpers;
 using ArcheryScoreClassification.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Amazon.Lambda.APIGatewayEvents;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 namespace ArcheryScoreClassification
@@ -21,11 +22,12 @@ namespace ArcheryScoreClassification
             _serviceProvider = serviceProvider;
         }
 
-        public Response GetClassification(Request request)
+        public APIGatewayProxyResponse GetClassification(APIGatewayProxyRequest apiGatewayRequest)
        {
+           var request = new Request(int.Parse(apiGatewayRequest.QueryStringParameters["Score"]), apiGatewayRequest.QueryStringParameters["RoundName"]);
            var getClassificationFromScore = _serviceProvider.GetService<IGetClassificationFromScore>();
            var classification = getClassificationFromScore.GetClassification(request.Score, request.RoundName);
-           return new Response(classification, request);
+           return new APIGatewayProxyResponse { Body = classification, StatusCode = 200};
        }
     }
 }
