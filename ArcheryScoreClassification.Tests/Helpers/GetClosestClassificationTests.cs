@@ -52,22 +52,5 @@ namespace ArcheryScoreClassification.Tests.Helpers
             //Assert
             result.Should().Be("testClassification2");
         }
-
-        [Fact]
-        public void WhenGetClosestClassificationAndScoreIsLowerThanThirdClass()
-        {
-            //Arrange
-            var subject = Mocker.CreateInstance<GetClosestClassification>();
-            var score = 1;
-            var classificationScores = new Dictionary<string, int>();
-            classificationScores.Add("testClassification1", 100);
-            classificationScores.Add("testClassification2", 200);
-            classificationScores.Add("testClassification3", 300);
-
-            //Act
-            var result = subject.Get(score, classificationScores);
-            //Assert
-            result.Should().Be("Unclassified");
-        }
     }
 }

@@ -16,13 +16,7 @@ namespace ArcheryScoreClassification.Helpers
         }
         public IClassificationForParticularRoundStrategy GetStrategy(string roundName)
         {
-            var classificationStrategy = _classificationScoreStrategies.FirstOrDefault(strategy => strategy.CanHandle(roundName));
-            if (classificationStrategy == null)
-            {
-                throw new Exception("Round does not exist, or has not been implemented yet");
-            }
-
-            return classificationStrategy;
+             return _classificationScoreStrategies.FirstOrDefault(strategy => strategy.CanHandle(roundName));
         }
     }
 }

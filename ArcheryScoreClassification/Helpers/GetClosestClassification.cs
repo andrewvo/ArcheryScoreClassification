@@ -9,8 +9,6 @@ namespace ArcheryScoreClassification.Helpers
     {
         public string Get(int score, Dictionary<string, int> classificationScores)
         {
-            classificationScores.Add("Unclassified", 0);
-
             var classificationScore = classificationScores.Where(item => item.Value <= score)
                 .OrderByDescending(item => item.Value)
                 .First();

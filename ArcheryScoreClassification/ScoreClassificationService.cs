@@ -26,8 +26,8 @@ namespace ArcheryScoreClassification
        {
            var request = new Request(int.Parse(apiGatewayRequest.QueryStringParameters["Score"]), apiGatewayRequest.QueryStringParameters["RoundName"]);
            var getClassificationFromScore = _serviceProvider.GetService<IGetClassificationFromScore>();
-           var classification = getClassificationFromScore.GetClassification(request.Score, request.RoundName);
-           return new APIGatewayProxyResponse { Body = classification, StatusCode = 200};
+           var proxyResponse = getClassificationFromScore.GetClassification(request.Score, request.RoundName);
+           return proxyResponse;
        }
     }
 }

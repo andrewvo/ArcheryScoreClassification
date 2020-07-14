@@ -45,28 +45,5 @@ namespace ArcheryScoreClassification.Tests.Helpers
             //Assert
             response.Should().Be(expectedStrategy.Object);
         }
-
-        [Fact]
-        public void WhenGetStrategyAndRoundNameDoesNotExist()
-        {
-            //Arrange
-            var unexpectedStrategy1 = new Mock<IClassificationForParticularRoundStrategy>();
-            var unexpectedStrategy2 = new Mock<IClassificationForParticularRoundStrategy>();
-
-            Mocker.Use(new[]{
-                unexpectedStrategy1.Object,
-                unexpectedStrategy2.Object}
-            .AsEnumerable());
-
-            var subject = Mocker.CreateInstance<ClassificationForParticularRoundStrategyFactory>();
-            var roundName = AutoFixture.Create<string>();
-            unexpectedStrategy1.Setup(strategy => strategy.CanHandle(roundName)).Returns(false);
-            unexpectedStrategy2.Setup(strategy => strategy.CanHandle(roundName)).Returns(false);
-
-            //Act
-            var error = Assert.Throws<Exception>(() => subject.GetStrategy(roundName));
-            //Assert
-            error.Message.Should().Be("Round does not exist, or has not been implemented yet");
-        }
     }
 }

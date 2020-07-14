@@ -2,6 +2,7 @@
 using ArcheryScoreClassification.Helpers;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using Amazon.Lambda.APIGatewayEvents;
 
 namespace ArcheryScoreClassification.Strategies
 {
@@ -20,10 +21,11 @@ namespace ArcheryScoreClassification.Strategies
             return roundName == "York" ? true : false;
         }
 
-        public string GetClassification(int score)
+        public APIGatewayProxyResponse GetClassification(int score)
         {
             var classificationScores = _yorkClassificationScoresConfig.Value.YorkClassificationScores;
-            return _getClosestClassification.Get(score ,classificationScores);
+            var classification = _getClosestClassification.Get(score ,classificationScores);
+            return new APIGatewayProxyResponse{Body = classification, StatusCode = 200};
         }
     }
 }

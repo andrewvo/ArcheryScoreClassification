@@ -1,7 +1,9 @@
+using Amazon.Lambda.APIGatewayEvents;
+
 namespace ArcheryScoreClassification.Helpers
 {
     public interface IGetClassificationFromScore
     {
-        string GetClassification(int score, string roundName);
+        APIGatewayProxyResponse GetClassification(int score, string roundName);
     }
 }

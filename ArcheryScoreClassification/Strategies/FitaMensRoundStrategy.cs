@@ -1,4 +1,5 @@
-﻿using ArcheryScoreClassification.Configuration;
+﻿using Amazon.Lambda.APIGatewayEvents;
+using ArcheryScoreClassification.Configuration;
 using ArcheryScoreClassification.Helpers;
 using Microsoft.Extensions.Options;
 
@@ -19,10 +20,11 @@ namespace ArcheryScoreClassification.Strategies
             return roundName == "FITA Mens" ? true : false;
         }
 
-        public string GetClassification(int score)
+        public APIGatewayProxyResponse GetClassification(int score)
         {
             var classificationScores = _fitaMensClassificationScoreConfig.Value.FitaMensClassificationScores;
-            return  _getClosestClassification.Get(score, classificationScores);
+            var classification = _getClosestClassification.Get(score, classificationScores);
+            return new APIGatewayProxyResponse{Body = classification, StatusCode = 200};
         }
     }
 }

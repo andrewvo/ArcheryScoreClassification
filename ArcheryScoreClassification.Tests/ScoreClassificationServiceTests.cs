@@ -36,9 +36,9 @@ namespace ArcheryScoreClassification.Tests
             queryStringParameters.Add("RoundName", roundName);
 
             var request = AutoFixture.Build<APIGatewayProxyRequest>().With(rq => rq.QueryStringParameters, queryStringParameters).Create();
-            var classification = AutoFixture.Create<string>();
+            var proxyResponse = AutoFixture.Create<APIGatewayProxyResponse>();
             var getClassificationFromScoreMock = new Mock<IGetClassificationFromScore>();
-            getClassificationFromScoreMock.Setup(sp => sp.GetClassification(score, roundName)).Returns(classification);
+            getClassificationFromScoreMock.Setup(sp => sp.GetClassification(score, roundName)).Returns(proxyResponse);
             serviceCollections.AddScoped(provider => getClassificationFromScoreMock.Object);
             var serviceProvider = serviceCollections.BuildServiceProvider();
 
@@ -46,8 +46,7 @@ namespace ArcheryScoreClassification.Tests
             //Act
             var result = subject.GetClassification(request);
             //Assert
-            result.Body.Should().Be(classification);
-            result.StatusCode.Should().Be(200);
+            result.Should().Be(proxyResponse);
         }
     }
 }

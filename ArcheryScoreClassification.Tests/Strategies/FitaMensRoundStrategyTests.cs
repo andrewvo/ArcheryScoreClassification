@@ -63,7 +63,8 @@ namespace ArcheryScoreClassification.Tests.Strategies
             //Act
             var result = subject.GetClassification(score);
             //Assert
-            result.Should().Be(classification);
+            result.Body.Should().Be(classification);
+            result.StatusCode.Should().Be(200);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Amazon.Lambda.APIGatewayEvents;
 
 namespace ArcheryScoreClassification.Strategies
 {
     public interface IClassificationForParticularRoundStrategy
     {
         bool CanHandle(string roundName);
-        string GetClassification(int score);
+        APIGatewayProxyResponse GetClassification(int score);
     }
 }
