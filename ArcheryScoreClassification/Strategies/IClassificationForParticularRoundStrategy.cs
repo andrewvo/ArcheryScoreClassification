@@ -2,9 +2,9 @@
 
 namespace ArcheryScoreClassification.Strategies
 {
-    public interface IClassificationScoresForParticularRoundStrategy
+    public interface IClassificationForParticularRoundStrategy
     {
         bool CanHandle(string roundName);
-        Dictionary<string, int> GetClassificationScores();
+        string GetClassification(int score);
     }
 }

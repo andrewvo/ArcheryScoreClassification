@@ -1,4 +1,5 @@
 ﻿using ArcheryScoreClassification.Configuration;
+using ArcheryScoreClassification.Helpers;
 using ArcheryScoreClassification.Strategies;
 using AutoFixture;
 using FluentAssertions;
@@ -54,12 +55,15 @@ namespace ArcheryScoreClassification.Tests.Strategies
             //Arrange
             var subject = Mocker.CreateInstance<FitaMensRoundStrategy>();
             var fitaMensClassificationScoresConfig = AutoFixture.Create<FitaMensClassificationScoresConfig>();
-
+            var score = AutoFixture.Create<int>();
+            var classification = AutoFixture.Create<string>();
             Mocker.GetMock<IOptions<FitaMensClassificationScoresConfig>>().Setup(op => op.Value).Returns(fitaMensClassificationScoresConfig);
+            Mocker.GetMock<IGetClosestClassification>().Setup(ccs => ccs.Get(score, fitaMensClassificationScoresConfig.FitaMensClassificationScores)).Returns(classification);
+
             //Act
-            var result = subject.GetClassificationScores();
+            var result = subject.GetClassification(score);
             //Assert
-            result.Should().BeEquivalentTo(fitaMensClassificationScoresConfig.FitaMensClassificationScores);
+            result.Should().Be(classification);
         }
     }
 }

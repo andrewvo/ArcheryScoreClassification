@@ -24,9 +24,10 @@ namespace ArcheryScoreClassification
             services.Configure<YorkClassificationScoresConfig>(configuration.GetSection("YorkClassificationScoresConfig"));
             services.AddTransient<ILambdaConfiguration, LambdaConfiguration>();
             services.AddTransient<IGetClassificationFromScore, GetClassificationFromScore>();
-            services.AddTransient<IClassificationScoresForParticularRoundStrategyFactory, ClassificationScoresForParticularRoundStrategyFactory>();
-            services.AddTransient<IClassificationScoresForParticularRoundStrategy, FitaMensRoundStrategy>();
-            services.AddTransient<IClassificationScoresForParticularRoundStrategy, YorkRoundStrategy>();
+            services.AddTransient<IClassificationForParticularRoundStrategyFactory, ClassificationForParticularRoundStrategyFactory>();
+            services.AddTransient<IClassificationForParticularRoundStrategy, FitaMensRoundStrategy>();
+            services.AddTransient<IClassificationForParticularRoundStrategy, YorkRoundStrategy>();
+            services.AddTransient<IGetClosestClassification, GetClosestClassification>();
             return services;
         }
     }

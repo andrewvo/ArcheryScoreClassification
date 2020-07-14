@@ -1,5 +1,6 @@
 using Amazon.Lambda.Core;
 using ArcheryScoreClassification.Helpers;
+using ArcheryScoreClassification.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 

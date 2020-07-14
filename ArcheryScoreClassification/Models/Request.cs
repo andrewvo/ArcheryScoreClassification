@@ -1,4 +1,4 @@
-﻿namespace ArcheryScoreClassification
+﻿namespace ArcheryScoreClassification.Models
 {
     public class Request
     {

@@ -6,6 +6,7 @@ using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
+using ArcheryScoreClassification.Models;
 
 namespace ArcheryScoreClassification.Tests
 {
